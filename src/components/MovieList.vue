@@ -1,26 +1,18 @@
 <template>
 <div id="movie-list">
-  <div v-for='movie in FilteredMovies' :key= "movie.title" class='movie'>{{movie.title}}</div>
+  <movie-item v-for='movie in FilteredMovies' :key= "movie.movie.Title" :movie = 'movie.movie' class='movie'><movie-item>
 </div>
 </template>
 
 <script>
 import genres from "../util/genres";
+import MovieItem from "./MovieItem.vue"
 export default{
- props:['Genre','Time'],
-
- data(){
-    return {
-     movies:[
-    {title:'Pulp Fiction',genre:genres.CRIME},
-    {title:'Home Alone',genre:genres.COMEDY},
-    {title:'Austin Powers',genre:genres.COMEDY}
-                ]
- };
-},
+ props:['Genre','Time','movies'],
+ components:{MovieItem},
 methods:{
  genreFilter(movie){
- let b = this.Genre.find(Genre=>movie.genre===Genre);
+ let b = this.Genre.find(Genre=>movie.movie.Genre===Genre);
  return b;
   console.log(b);
      }
@@ -29,10 +21,11 @@ methods:{
  FilteredMovies(){
   if(this.Genre.length===0){
      return this.movies;
-    }else{
+    }
+  else{
          let e;
     return e=this.movies.filter(this.genreFilter);
-                }
+      }
 
 
             }

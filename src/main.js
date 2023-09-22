@@ -3,9 +3,9 @@ import Vue  from "vue";
 import "./style.scss"
 import MovieList from './components/MovieList.vue';
 import MovieFilter from './components/MovieFilter.vue';
-// import genre from './util/genres.js';
+ import VueResource from 'vue-resource';
 // import time from './util/times.js';
-
+Vue.use(VueResource)
 // const overview = createApp(Overview);
 // overview.mount('#app')
 new Vue({
@@ -26,11 +26,17 @@ methods:{
 },
 data(){
     return{ genre:[],
-        time:[]
+        time:[],
+        movies:[]
  } },
 components:{
   MovieList,MovieFilter
 },
+created(){
+  this.$http.get('/api').then(response=>{
+    this.movies = response.data
+  })
+}
 
 
 
