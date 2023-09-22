@@ -8,18 +8,24 @@
 import genres from "../util/genres";
 import MovieItem from "./MovieItem.vue"
 export default{
- props:['Genre','Time','movies'],
+ props:['Genra','Time','movies'],
  components:{MovieItem},
 methods:{
  genreFilter(movie){
- let b = this.Genre.find(Genre=>movie.movie.Genre===Genre);
- return b;
-  console.log(b);
+ let moviegenres=movie.movie.Genre.split(",")
+ let matched = true;
+ //weird if i dont use variable matched n use bool straight it doesnt filter
+ this.Genra.forEach(genre=>{
+   if(moviegenres.indexOf(genre) == -1){
+    return matched = false;
+   }
+ });
+ return matched;
      }
  },
  computed:{
  FilteredMovies(){
-  if(this.Genre.length===0){
+  if(this.Genra.length===0){
      return this.movies;
     }
   else{
