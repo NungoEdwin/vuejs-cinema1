@@ -3,9 +3,11 @@ import Vue  from "vue";
 import "./style.scss"
 import MovieList from './components/MovieList.vue';
 import MovieFilter from './components/MovieFilter.vue';
- import VueResource from 'vue-resource';
-// import time from './util/times.js';
+import VueResource from 'vue-resource';
+import moment from "moment-timezone";
+moment.tz.setDefault('UTC')
 Vue.use(VueResource)
+Object.defineProperty(Vue.prototype,'$moment',{get(){return this.$root.moment}})
 // const overview = createApp(Overview);
 // overview.mount('#app')
 new Vue({
@@ -27,7 +29,8 @@ methods:{
 data(){
     return{ genre:[],
         time:[],
-        movies:[]
+        movies:[],
+        moment
  } },
 components:{
   MovieList,MovieFilter
@@ -35,6 +38,7 @@ components:{
 created(){
   this.$http.get('/api').then(response=>{
     this.movies = response.data
+
   })
 }
 
