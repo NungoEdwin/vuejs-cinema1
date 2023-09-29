@@ -6,11 +6,11 @@
 </template>
 <script>
 export default{
- props:["title"],
+ props:["title",'category'],
  methods:{
     checkFilter(){
         this.checked=!this.checked
-        this.$emit('checkfilter','genre',this.title,this.checked)
+        this.$emit('checkfilter',this.category,this.title,this.checked)
     }},
     data(){
      return{

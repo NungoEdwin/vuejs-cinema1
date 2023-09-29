@@ -9,7 +9,7 @@
   <span class = 'movie-rating'>{{movie.Rated}}</span>
   </div>
   <div class="movie-sessions">
-  <div v-for='session in sessions' class="session-time-wrapper">
+  <div v-for='session in filteredsessions()' class="session-time-wrapper">
   <div class="session-time">{{formatsession(session.time)}}</div>
   </div>
   </div>
@@ -22,15 +22,32 @@
 </template>
 <script>
 export default{
-props:['movie','sessions'],
+props:['movie','sessions','time'],
 methods:{
 formatsession (session){
 return this.$moment(session).format('h:mm A')
 
+},
+sessionTimeFilter(session){
+if(!this.$moment(session.time).isSame(this.day,'day')){
+return false
 }
+ else if(this.time.length == 2 || this.time.length == 0){
+  return true
+ }
+ else if(this.time[0] == 'After 6pm'){
+ return this.$moment(session.time).hour() >= 18
+ }
+ else{
+ return this.$moment(session.time).hour() <= 18
+ }
+ },
+ filteredsessions(){
+  return this.sessions.filter(session=> this.sessionTimeFilter(session))
+
   }
 
-
+}
 }
 
 </script>
