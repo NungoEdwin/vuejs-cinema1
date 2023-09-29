@@ -36,14 +36,16 @@ return false
   return true
  }
  else if(this.time[0] == 'After 6pm'){
- return this.$moment(session.time).hour() >= 18
+ let a =this.$moment(session.time).hour() >= 18
+ console.log(a)
+ return a;
  }
  else{
  return this.$moment(session.time).hour() <= 18
  }
  },
  filteredsessions(){
-  return this.sessions.filter(session=> this.sessionTimeFilter(session))
+  return this.sessions.filter(session=> this.sessionTimeFilter(session))//find not used as it brings only first instance not the array as in filter()
 
   }
 
