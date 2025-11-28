@@ -35,8 +35,13 @@ methods:{
          movies:[],
 
   } },
-  created(){
-    this.$http.get('/api').then(response=>{
-      this.movies = response.data})
+ created() {
+    fetch('/api')
+      .then(response => {
+        this.movies = response.data;
+      })
+      .catch(error => {
+        console.error('API error:', error);
+      });
   }
 }</script>

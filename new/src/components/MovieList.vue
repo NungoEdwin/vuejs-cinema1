@@ -15,8 +15,9 @@
 </template>
 
 <script>
-//import genres from "../util/genres";
+import genres from "../util/genres";
 import MovieItem from "./MovieItem.vue"
+import dayjs from "dayjs"
 export default{
  props:['Genra','Time','movies'],
  components:{MovieItem},
@@ -31,21 +32,21 @@ methods:{
    }
  });
  return matched;
-     },
-     sessionTimeFilter(session){
-     if(!this.$moment(session.time).isSame(this.day,'day')){
-     return false
-     }
-      else if(this.Time.length == 2 || this.Time.length == 0){
-       return true
-      }
-      else if(this.Time[0] == 'After 6pm'){
-      return this.$moment(session.time).hour() >= 18
-      }
-      else{
-      return this.$moment(session.time).hour() <= 18
-      }
-      }
+  },
+    sessionTimeFilter(session) {
+
+  if (!dayjs(session.time).isSame(this.day, "day")) {
+    return false;
+  }
+  if (this.Time.length === 2 || this.Time.length === 0) {
+    return true;
+  }
+  if (this.Time[0] === "After 6pm") {
+    return dayjs(session.time).hour() >= 18;
+  }
+  return dayjs(session.time).hour() <= 18;
+}
+
  },
  computed:{
  FilteredMovies(){
@@ -56,11 +57,8 @@ methods:{
          let e;
     return e=this.movies.filter(movie=>this.genreFilter(movie)).filter(movie=>movie.sessions.find(session=> this.sessionTimeFilter(session)));
       }
-
-
-            }
-
-        }
+  }
+}
 
         }
 </script>
