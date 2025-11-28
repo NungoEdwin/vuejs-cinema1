@@ -36,9 +36,13 @@ methods:{
 
   } },
  created() {
-    fetch('/api')
+    fetch('/api_offline.json')
       .then(response => {
-        this.movies = response.data;
+       return response.json();
+      })
+      .then(data=>{
+        this.movies=data
+        console.log("overview movs",data)
       })
       .catch(error => {
         console.error('API error:', error);

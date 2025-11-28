@@ -2,7 +2,7 @@
 <div id="movie-list" >
 
 <div v-if="FilteredMovies.length">
-  <movie-item v-for='movie in FilteredMovies' :time ='Time' :key= "movie.movie.Title" :movie = 'movie.movie' :sessions='movie.sessions' class='movie'></movie-item>
+  <movie-item v-for='movie in FilteredMovies' :time ='Time' :key= "movie.Title" :movie = 'movie' :sessions='movie.sessions' class='movie'></movie-item>
 </div>
 <div v-else-if="movies.length" class="no-results">
   No Results
@@ -33,8 +33,7 @@ methods:{
  });
  return matched;
   },
-    sessionTimeFilter(session) {
-
+  sessionTimeFilter(session) {
   if (!dayjs(session.time).isSame(this.day, "day")) {
     return false;
   }
@@ -46,16 +45,18 @@ methods:{
   }
   return dayjs(session.time).hour() <= 18;
 }
-
  },
  computed:{
  FilteredMovies(){
+  console.log("movies org",this.movies);
   if(this.Genra.length===0 && this.Time.length ===0){
      return this.movies;
     }
   else{
          let e;
-    return e=this.movies.filter(movie=>this.genreFilter(movie)).filter(movie=>movie.sessions.find(session=> this.sessionTimeFilter(session)));
+    e=this.movies.filter(movie=>this.genreFilter(movie)).filter(movie=>movie.sessions.find(session=> this.sessionTimeFilter(session)));
+    console.log(e);
+    return e;
       }
   }
 }
